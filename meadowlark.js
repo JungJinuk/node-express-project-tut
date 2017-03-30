@@ -11,6 +11,11 @@ app.set('views', './views/layouts');
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
+app.use((req, res, next) => {
+  res.locals.showTests = app.get('env') !== 'production' && req.query.test === '1';
+  next();
+});
+
 
 //  익스프레스의 기본 상태 코드는 200
 //  익스프레스의 라우터는 정규화를 자동으로 처리한다.
@@ -20,7 +25,10 @@ app.get('/', (req, res) => {
 });
 
 app.get('/about', (req, res) => {
-  res.render('about', { fortune: fortune.getFortune() });
+  res.render('about', { 
+    fortune: fortune.getFortune(),
+    pageTestScript: '/qa/tests-about.js'
+   });
 });
 
 
