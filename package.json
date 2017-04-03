@@ -1,0 +1,29 @@
+{
+  "name": "node-express-project-tut",
+  "version": "1.0.0",
+  "description": "node-express project sample",
+  "main": "meadowlark.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JungJinuk/node-express-project-tut.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JungJinuk/node-express-project-tut/issues"
+  },
+  "homepage": "https://github.com/JungJinuk/node-express-project-tut#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "express-handlebars": "^3.0.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "zombie": "^5.0.5"
+  }
+}
