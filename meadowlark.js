@@ -11,6 +11,9 @@ app.set('views', './views');
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
+//  서버 정보 제공 안함
+//app.disable('x-powered-by');
+
 app.use((req, res, next) => {
   res.locals.showTests = app.get('env') !== 'production' && req.query.test === '1';
   next();
@@ -20,12 +23,35 @@ app.use((req, res, next) => {
 //  익스프레스의 기본 상태 코드는 200
 //  익스프레스의 라우터는 정규화를 자동으로 처리한다.
 //  route
+app.get('/headers', (req, res) => {
+  res.type('text/plain');
+  var s = "";
+  for (var name in req.headers) {
+    s += name + ": " + req.headers[name] + "\n";
+  }
+  res.send(s);
+});
+
+var tours = [
+  { id: 0, name: 'Hood River', price: 99.99 },
+  { id: 1, name: 'Oregon Coast', price: 149.95 },
+]
+
+app.get('/api/tours', (req, res) => {
+  res.format({'application/json': () => {
+    res.json(tours);
+  }});
+});
+
+
 app.get('/', (req, res) => {
   res.render('layouts/home');
 });
 
+
+//  about request headers
 app.get('/about', (req, res) => {
-  res.render('layouts/about', { 
+  res.render('layouts/about', {
     fortune: fortune.getFortune(),
     pageTestScript: '/qa/tests-about.js'
    });
@@ -50,8 +76,7 @@ app.use((req, res) => {
 //  custom 500 page
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500);
-  res.render('layouts/500');
+  res.status(500).render('layouts/500');  //  한 줄로 쓰기 가능
 });
 
 app.listen(app.get('port'), () => {
